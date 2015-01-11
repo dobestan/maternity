@@ -51,3 +51,6 @@ response = get_response(
 
 data = bs4.BeautifulSoup(response.text)
 care_centers = data.findAll("tr")[1::]
+
+for care_center in care_centers:
+    detail_page = care_center.findAll("a")[1]["href"]
