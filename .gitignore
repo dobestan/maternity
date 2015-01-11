@@ -55,3 +55,6 @@ target/
 
 # autoenv configuration
 .env
+
+# Rope project folder
+.ropeproject/
