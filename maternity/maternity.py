@@ -3,15 +3,10 @@
 import requests
 
 
-def get_response():
-    BASE_URL = "http://shjw.or.kr/bbs/board.php"
+def get_response(BASE_URL, params):
     response = requests.get(
         BASE_URL,
-        params = {
-            'bo_table': 'postnataldb',
-            'sca': '서울시',
-            # 'wr_id': '123'
-        }
+        params = params,
     )
 
     return response
