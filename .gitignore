@@ -58,3 +58,6 @@ target/
 
 # Rope project folder
 .ropeproject/
+
+# distutils folder with tox
+MANIFEST
