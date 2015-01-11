@@ -28,6 +28,7 @@ pages = int(
     )["href"].split("page=")[-1]
 )
 
+"""
 for page in range(1, pages+1):
     response = get_response(
         BASE_URL,
@@ -37,5 +38,16 @@ for page in range(1, pages+1):
             'page': page,
         }
     )
+"""
 
-    print(response.url)
+response = get_response(
+    BASE_URL,
+    {
+        'bo_table': 'postnataldb',
+        'sca': '서울시',
+        'page': 1,
+    }
+)
+
+data = bs4.BeautifulSoup(response.text)
+care_centers = data.findAll("tr")[1::]
