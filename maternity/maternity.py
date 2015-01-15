@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
 
+import re
+
 import requests
 import bs4
 
@@ -75,3 +77,40 @@ contents = data.find(
         'id': 'bo_v_atc',
     },
 )
+
+"""
+<section id="bo_v_atc">
+<h2 id="bo_v_atc_title">본문</h2>
+<div id="bo_v_img">
+</div>
+<!-- 본문 내용 시작 { -->
+<div id="bo_v_con"><div><span style="font-size:19px;">주   소 : 서울 강남구 대치동 984 로얄빌딩 3층</span></div>
+<div> </div>
+<div><span style="font-size:19px;">전   화 : 02) 558-2053</span></div>
+<div> </div>
+<div><span style="font-size:19px;">홈페이지 : <a href="http://www.allobebe.kr/">http://www.allobebe.kr/</a></span></div>
+<div> </div>
+<div><span style="font-size:19px;"><a class="view_image" href="http://shjw.or.kr/bbs/view_image.php?fn=%2Fdata%2Feditor%2F1406%2F1982136337_1403246229.8641.jpg" target="_blank"><img alt="" src="http://shjw.or.kr/data/editor/1406/thumb-1982136337_1403246229.8641_600x363.jpg"/></a></span></div>
+</div>
+<!-- } 본문 내용 끝 -->
+<!-- 스크랩 추천 비추천 시작 { -->
+<!-- } 스크랩 추천 비추천 끝 -->
+</section>
+"""
+
+address = re.search(
+    '주.*소.*\n',
+    contents.text.encode("UTF-8")).group(0).split(":")[-1].strip()
+
+contact = re.search(
+    '전.*화.*\n',
+    contents.text.encode("UTF-8")).group(0).split(":")[-1].strip()
+
+homepage = contents.find("a")["href"]
+img_src = contents.find("img")["src"]
+
+print(title)
+print(address)
+print(contact)
+print(homepage)
+print(img_src)
