@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-
+import re
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -64,3 +65,33 @@ def get_all_detail_page_url_in_location(location):
             detail_pages.append(detail_page)
 
     return detail_pages
+
+
+def get_detail_information(detail_page_url):
+    response = requests.get(detail_page_url)
+    data = BeautifulSoup(response.text)
+
+    title = data.find("h1", attrs={'id': 'bo_v_title'}).text.strip()
+    contents = data.find("section", attrs={'id': 'bo_v_atc',})
+
+    address = re.search(
+        '주.*소.*\n',
+        contents.text.encode("UTF-8")
+    ).group(0).split(":")[-1].strip()
+
+    contact = re.search(
+        '전.*화.*\n',
+        contents.text.encode("UTF-8")
+    ).group(0).split(":")[-1].strip()
+
+    homepage = contents.find("a")["href"]
+    img_src = contents.find("img")["src"]
+
+    information = {
+        "title": title,
+        "address": address,
+        "contact": contact,
+        "homepage": homepage,
+        "img_src": img_src,
+    }
+    return information
