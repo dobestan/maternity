@@ -5,6 +5,7 @@ import requests
 
 from maternity import get_response
 from maternity import get_total_pages
+from maternity import get_locations
 
 
 class TestAssociation(unittest.TestCase):
@@ -26,3 +27,6 @@ class TestAssociation(unittest.TestCase):
 
     def test_get_total_pages_should_return_int(self):
         self.assertTrue(isinstance(self.total_pages, int))
+
+    def test_get_locations(self):
+        self.assertTrue(isinstance(get_locations(), list))
