@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
+from bs4 import BeautifulSoup
 
 
 def get_response():
@@ -12,3 +13,12 @@ def get_response():
 
     response = requests.get(BASE_URL, params=params)
     return response
+
+
+def get_total_pages(response):
+    data = BeautifulSoup(response.text)
+
+    pages = int(
+        data.find("a", attrs={'class': 'pg_end'})["href"].split("page=")[-1]
+    )
+    return pages

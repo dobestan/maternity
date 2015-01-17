@@ -4,11 +4,13 @@ import unittest
 import requests
 
 from maternity import get_response
+from maternity import get_total_pages
 
 
 class TestAssociation(unittest.TestCase):
     def setUp(self):
         self.response = get_response()
+        self.total_pages = get_total_pages(self.response)
 
     def test_get_response_should_requests_valid_url(self):
         self.assertEqual(
@@ -21,3 +23,6 @@ class TestAssociation(unittest.TestCase):
             self.response.status_code,
             requests.codes.ok,
         )
+
+    def test_get_total_pages_should_return_int(self):
+        self.assertTrue(isinstance(self.total_pages, int))
