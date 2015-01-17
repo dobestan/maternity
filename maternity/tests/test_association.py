@@ -6,6 +6,7 @@ import requests
 from maternity import get_response
 from maternity import get_total_pages
 from maternity import get_locations
+from maternity import get_all_detail_page_url_in_location
 
 
 class TestAssociation(unittest.TestCase):
@@ -28,5 +29,18 @@ class TestAssociation(unittest.TestCase):
     def test_get_total_pages_should_return_int(self):
         self.assertTrue(isinstance(self.total_pages, int))
 
-    def test_get_locations(self):
+    def test_get_locations_should_return_list(self):
         self.assertTrue(isinstance(get_locations(), list))
+
+    def test_get_locations_should_return_list_not_empty(self):
+        self.assertGreaterEqual(
+            get_locations(), 1
+        )
+
+    def test_get_all_detail_page_url_in_Seoul_should_return_list(self):
+        self.assertTrue(
+            isinstance(
+                get_all_detail_page_url_in_location(get_locations()[0]),
+                list
+            )
+        )

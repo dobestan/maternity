@@ -1,3 +1,4 @@
 from association import get_response
 from association import get_total_pages
 from association import get_locations
+from association import get_all_detail_page_url_in_location

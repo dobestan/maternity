@@ -37,3 +37,30 @@ def get_locations():
         '제주도',
     ]
     return locations
+
+
+def get_all_detail_page_url_in_location(location):
+    """
+    특정 지역에 있는 모든 페이지의 링크를 배열로 저장하여 반환한다.
+    ( 예, 서울시에 있는 모든 산후조리원 페이지 )
+    """
+    BASE_URL = "http://shjw.or.kr/bbs/board.php"
+    detail_pages = list()
+
+    total_pages = get_total_pages(get_response())
+    for page in range(1, total_pages+1):
+        params = {
+            'bo_table': 'postnataldb',
+            'sca': location,
+            'page': page,
+        }
+        response = requests.get(BASE_URL, params=params)
+
+        data = BeautifulSoup(response.text)
+        detail_pages_block = data.findAll("tr")[1::]
+
+        for detail_page_block in detail_pages_block:
+            detail_page = detail_page_block.findAll("a")[1]["href"]
+            detail_pages.append(detail_page)
+
+    return detail_pages
